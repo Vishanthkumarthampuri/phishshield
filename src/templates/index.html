@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PhishShield - URL Phishing Detector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 16px;
+        }
+        .card {
+            background: #020617;
+            border-radius: 16px;
+            padding: 24px 28px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+            border: 1px solid #1f2937;
+        }
+        h1 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: #f9fafb;
+        }
+        p.subtitle {
+            margin-top: 4px;
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        label {
+            font-size: 0.9rem;
+            color: #d1d5db;
+        }
+        input[type="text"] {
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #4b5563;
+            background: #020617;
+            color: #e5e7eb;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        input[type="text"]:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 1px #0ea5e9;
+        }
+        button {
+            margin-top: 4px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            background: #0ea5e9;
+            color: #0b1120;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        button:hover {
+            background: #38bdf8;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+        }
+        .result.safe {
+            background: rgba(22, 163, 74, 0.12);
+            border: 1px solid #16a34a;
+            color: #bbf7d0;
+        }
+        .result.phishing {
+            background: rgba(220, 38, 38, 0.12);
+            border: 1px solid #ef4444;
+            color: #fecaca;
+        }
+        .probability {
+            margin-top: 6px;
+            font-size: 0.85rem;
+            color: #e5e7eb;
+        }
+        .footer {
+            margin-top: 18px;
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        code {
+            background: #020617;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>PhishShield</h1>
+    <p class="subtitle">Enter a website URL to check if it is likely <strong>phishing</strong> or <strong>legitimate</strong>.</p>
+
+    <form method="post">
+        <label for="url">Website URL</label>
+        <input
+            type="text"
+            id="url"
+            name="url"
+            placeholder="e.g. https://example.com/login"
+            value="{{ url_input | default('') }}"
+            required
+        >
+        <button type="submit">Check URL</button>
+    </form>
+
+    {% if prediction_label %}
+        <div class="result {% if prediction_raw == 1 %}phishing{% else %}safe{% endif %}">
+            <strong>Result:</strong>
+            {{ prediction_label }}
+            {% if probability is not none %}
+                <div class="probability">
+                    Model confidence: {{ probability }}%
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="footer">
+        This is a demo classifier trained on a phishing URL dataset. It is not a replacement for real security tools.
+    </div>
+</div>
+</body>
+</html>
