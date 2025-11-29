@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "PhishShield: Train Model",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/train_model.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "PhishShield: Evaluate Model",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/evaluate_model.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "PhishShield: Predict URL",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/predict_url.py",
+      "args": [
+        "https://example.com"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}
+
